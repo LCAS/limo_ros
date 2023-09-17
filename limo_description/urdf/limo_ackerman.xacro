@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <robot name="limo_ackerman" xmlns:xacro="http://ros.org/wiki/xacro">
+    <!-- a lightweight robot geometry model -->
+    <xacro:arg name="model_lite" default="false" />
 
     <xacro:arg name="robot_namespace" default="/" />
     <xacro:include filename="$(find limo_description)/urdf/limo_xacro.xacro" />
@@ -34,7 +36,12 @@
         <visual>
             <origin xyz="0 0 -0.15" rpy="0 0 1.57" />
             <geometry>
-                <mesh filename="package://limo_description/meshes/limo_base.dae" scale="1 1 1"/>
+                <xacro:if value="$(arg model_lite)">
+                    <mesh filename="package://limo_description/meshes/limo_base_lite.dae" scale="1 1 1"/>
+                </xacro:if>
+                <xacro:unless value="$(arg model_lite)">
+                    <mesh filename="package://limo_description/meshes/limo_base.dae" scale="1 1 1"/>
+                </xacro:unless>
             </geometry>
         </visual>
         <collision>
@@ -73,11 +80,11 @@
         <origin xyz="0.0 0 -0.1" rpy="0 0 0"/>
     </xacro:limo_imu>
     
-    <xacro:limo_left_steering_hinge parent_prefix="base_link" wheel_prefix="left_steering_hinge">
+    <xacro:limo_left_steering_hinge parent_prefix="base_link" wheel_prefix="left_steering_hinge" model_lite="$(arg model_lite)">
         <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0  0" />
     </xacro:limo_left_steering_hinge>
 
-    <xacro:limo_right_steering_hinge parent_prefix="base_link" wheel_prefix="right_steering_hinge">
+    <xacro:limo_right_steering_hinge parent_prefix="base_link" wheel_prefix="right_steering_hinge" model_lite="$(arg model_lite)">
         <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="${M_PI} 0 0" />
     </xacro:limo_right_steering_hinge>
 
@@ -91,7 +98,12 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="package://limo_description/meshes/limo_wheel.dae" />
+                <xacro:if value="$(arg model_lite)">
+                    <mesh filename="package://limo_description/meshes/limo_wheel_lite.dae" />
+                </xacro:if>
+                <xacro:unless value="$(arg model_lite)">
+                    <mesh filename="package://limo_description/meshes/limo_wheel.dae" />
+                </xacro:unless>
             </geometry>
         </visual>
         <collision>
@@ -117,7 +129,12 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="package://limo_description/meshes/limo_wheel.dae" />
+                <xacro:if value="$(arg model_lite)">
+                    <mesh filename="package://limo_description/meshes/limo_wheel_lite.dae" />
+                </xacro:if>
+                <xacro:unless value="$(arg model_lite)">
+                    <mesh filename="package://limo_description/meshes/limo_wheel.dae" />
+                </xacro:unless>
             </geometry>
         </visual>
             <collision>

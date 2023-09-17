@@ -2,6 +2,8 @@
 <launch>
     <arg name="robot_namespace" default="/"/>
     <arg name="world_name" default="$(find limo_gazebo_sim)/worlds/empty.world"/>
+    <!-- a lightweight robot geometry model -->
+    <arg name="model_lite" default="true"/>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(arg world_name)"/>
@@ -13,7 +15,7 @@
     </include>
 
     <param name="robot_description" command="$(find xacro)/xacro '$(find limo_description)/urdf/limo_four_diff.xacro'
-        robot_namespace:=$(arg robot_namespace)" />
+        robot_namespace:=$(arg robot_namespace) model_lite:=$(arg model_lite)" />
 
     <!-- initial pose -->
     <arg name="x" default="0.0"/>
